@@ -10,18 +10,6 @@ const {pearson, similar} = require('../relate');
 
 app.use(bodyParser.json());
 
-function getFits(similar){
-    const specs = [];
-    similar.forEach(async doc=>{
-        const fit = await Fit.findOne({spec:doc.p}).then(results=>{
-            return results;
-        })
-       return specs.push(fit);
-    })
-    console.log(specs);
-    return specs;
-}
-
 router.post('/fits',(req, res, next)=>{
     User.findOne({name:req.body.name}).exec().then(results=>{
         const fit = new Fit({
@@ -69,12 +57,8 @@ router.post('/newspecs',function(req, res, next){
     })
 })
 
-const data = {
-    name:"solomon"
-}
-
-router.get('/me',function(req, res, next){
-    res.send(data)
+router.get('/about',(req, res)=>{
+    res.send("about");
 })
 
 router.post('/signup',function(req, res, next){
@@ -148,12 +132,6 @@ router.post('/signup',function(req, res, next){
 
   router.get('/users', (req, res)=>{
       return User.find().exec().then(results=>{
-          const users = [];
-          results.forEach(element => {
-              users.push({
-                  
-              })
-          });
           const users1 = {...users};
           console.log(users1)
           res.status(200).json({
